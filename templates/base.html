@@ -10,16 +10,48 @@
         <ul>
             <li><a href="/">Home</a></li>
             <li><a href="/admin">Admin</a></li>
+            <li><a href="/admin/users">Admin > Users</a></li>
+            <li><a href="/admin/users/create">Admin > Users > Create</a></li>
             <li><a href="/admin/organizations">Admin > Organizations</a></li>
             <li><a href="/admin/organizations/create">Admin > Organizations > Create</a></li>
         </ul>
     </div>
     {% block content%}
     {% endblock %}
+
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            <div class=flashes>
+                {% for category, message in messages %}
+                    <div class="flash flash-{{category}}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
     <style>
         * {
             padding: .25%;
             margin: .25%;
+            border-radius: 2px;
+        }
+        .flashes {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            white-space: nowrap;
+            width: fit-content;
+        }
+        .flash {
+            margin-bottom: 1rem;
+            width: fit-content;
+        }
+        .flash-success {
+            background: #96dc51;
+            padding: .5rem 1rem;
+        }
+        input[type="submit"] {
+            padding: .5rem 1rem;
         }
     </style>
 </body>

@@ -1,0 +1,27 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div>
+        <form method="post" action="/admin/users/create">
+            {{ form.csrf_token }}
+
+            <div>
+                {{form.name.label}} {{form.name(size=20)}}
+            </div>
+            <div>
+                {{form.age.label}} {{form.age}}
+            </div>
+            
+            <div>
+                {{form.cool.label}} {{form.cool}}
+            </div>
+
+            <div>
+                {{form.submit}}
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

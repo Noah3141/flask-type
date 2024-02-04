@@ -1,16 +1,15 @@
-
 {% extends 'base.html' %}
 
 {% block content %}
 <h1>
-    Admin > Organization
+    Admin > Users
 </h1>
 
 <div>
-    {% for org in organizations %}
+    {% for user in users %}
 
     <div>
-        <div>{{org.name}}</div>
+        <div>{{user.name}}</div>
 
     </div>
 

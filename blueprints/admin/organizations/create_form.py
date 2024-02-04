@@ -1,7 +1,12 @@
 
+from typing import Any
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, BooleanField, IntegerField, validators as v
 
-class CreateOrganization(FlaskForm):
-    name = StringField("Name")
-    submit = SubmitField("Submit")
+validators = [
+    v.InputRequired("is a required field")
+]
+
+class CreateOrganizationForm(FlaskForm):
+    pass
+
