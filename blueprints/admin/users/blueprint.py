@@ -15,7 +15,7 @@ users_map: Blueprint = Blueprint(
 @users_map.route('/', methods=["GET"])
 def index():
     ctx = Ctx()
-    users: List[User] = ctx.db.users.get_all()
+    users: List[User] = ctx.db.users.get_by_id(23)
     return render_template(
         "admin/users/index.html",
         users=users
