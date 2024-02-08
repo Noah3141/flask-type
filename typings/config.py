@@ -32,11 +32,6 @@ ConfigKey = Literal[
 ]
 
 
-
-
-
-
-
 class FlaskConfig(TypedDict, total=False):
     DEBUG: bool
     TESTING: bool

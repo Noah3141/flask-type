@@ -2,12 +2,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+    <h1>
+        Admin > Organization > Create
+    </h1>
     <div>
         <form method="post" action="/admin/organizations/create">
             {{ form.csrf_token }}
 
-         
         </form>
     </div>
 

@@ -1,4 +1,3 @@
-from typing import NamedTuple
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm.session import sessionmaker
@@ -11,7 +10,6 @@ AutoBase = automap_base()
 AutoBase.prepare(autoload_with=engine)
 Organization = AutoBase.classes.orgs
 
-#
 
 Session = sessionmaker(bind=engine)
 

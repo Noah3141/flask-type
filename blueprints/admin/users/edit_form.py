@@ -6,19 +6,18 @@ from wtforms import StringField, SubmitField, BooleanField, IntegerField, valida
 
 
 
-class CreateUserForm(FlaskForm):
+class UpdateUserForm(FlaskForm):
     name = StringField(
         "Name", 
-        [v.DataRequired("Required!")],
-        
+        [v.InputRequired()]
     )
     nickname = StringField(
         "Nickame (Optional)",
-        [],
+        default=None
     )
     age = IntegerField(
         "Age", 
-        [v.InputRequired("is a required field")]
+        default=None
     )
     cool = BooleanField(
         "Cool", 

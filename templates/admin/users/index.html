@@ -8,11 +8,18 @@
 <div>
     {% for user in users %}
 
-    <div>
-        <div>{{user.name}}</div>
-
+    <div class="user-block">
+        <div>{{user.name}} is {% if user.cool %} cool {% else %} not cool {% endif %}</div>
+        <div>{{user.nickname or "No nickname"}}</div>
+        <div>{{user.age}}</div>
     </div>
 
     {% endfor %}
 </div>
+
+<style>
+    .user-block {
+        margin: 2rem 1rem;
+    }
+</style>
 {% endblock %}

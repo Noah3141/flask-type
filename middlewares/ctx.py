@@ -2,9 +2,13 @@ from typing import NamedTuple
 from flask.sessions import SessionMixin as FlaskSession
 from sqlalchemy.orm import Session as DbSession
 from flask import session
-from db import Session as Db
+from models.db import Db
 from flask import request, Request
 
+
+# Both SQLAlchemy and Flask having a "session" makes it all the more useful to contextually-wrap and rename with a lightweight class
+# ctx.db...
+# ctx.session
 
 class Ctx:
     """
@@ -12,9 +16,6 @@ class Ctx:
     """
     session: FlaskSession = session
     "User session"
-    db: DbSession = Db()
+    db: Db = Db()
     "Database connection"
     request: Request = request
-    
-    def __del__(self):
-        self.db.close()

@@ -2,12 +2,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Admin > Users > Create</h1>
+    <h1>Admin > Users > Update</h1>
     <div>
-        <form method="post" action="/admin/users/create">
+        <form method="post" action="/admin/users/update">
             {{ form.csrf_token }}
 
             <div>
+                Provide a Name of a User to Update
+            </div>
+            <div> 
                 {{form.name.label}} {{form.name(size=20)}}
             </div>
             <div>
