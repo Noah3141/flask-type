@@ -1,12 +1,12 @@
 
 import json 
 from typing import Any, Callable, Dict, List, Literal, NamedTuple, Self, Tuple, Type, TypeAlias, TypeVar, TypedDict, Unpack, ParamSpec, assert_type, get_args
-
 from db import Session as SessionMaker
 
 
 
 Output = TypeVar("Output") 
+RouterErr = TypeVar("RouterErr")
 Input = ParamSpec("Input")
 
 DecOut = TypeVar("DecOut") 
@@ -73,13 +73,25 @@ class Db:
         return decorator # type:ignore
 
 
+from typing import Generic
 
 
 
-def Atomic(*f: Callable[Input, Output]) -> Callable[Input, Tuple[Output, None] | Tuple[None, RouterError]]:
+class Ok(NamedTuple, Generic[Output]):
+    val: Output
+    err: Literal[None] = None
+
+class Err(NamedTuple, Generic[RouterErr]):
+    err: RouterError
+    val: None = None
+
+RouterOutput = Ok[Output] | Err[RouterError]
+
+
+def Atomic(*f: Callable[Input, Output]) -> Callable[Input, RouterOutput[Output]]:
     # Make "transaction here?" No session?
 
-    def wrapper(*args: Input.args, **kwargs: Input.kwargs) ->  Tuple[Output, None] | Tuple[None, RouterError]:
+    def wrapper(*args: Input.args, **kwargs: Input.kwargs) -> RouterOutput[Output]:
         print("Starting session")
         session = SessionMaker()
         try:
@@ -89,12 +101,12 @@ def Atomic(*f: Callable[Input, Output]) -> Callable[Input, Tuple[Output, None] |
             session.commit()
             session.close()
             print("Session closed")
-            return (output, None)
+            return Ok(output)
         
         except RouterError as e:
             session.rollback()
             session.close()
-            return (None, e)
+            return Err(e)
 
         except Exception as e:
             session.rollback()

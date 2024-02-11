@@ -25,7 +25,7 @@ class OrganizationsRouter:
     def get_by_id(self, opts: GetById) -> Organization:
         model = self.session.query(Organization).get(opts["id"])
 
-        if model is None: raise RouterError({"msg":"Not found!"})
+        if model is None: raise RouterError({"err":"Not found!"})
         return Organization(
             **model
         )
