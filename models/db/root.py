@@ -44,10 +44,10 @@ def panic():
 
 class RouterError(Exception):
     class ErrorData(TypedDict):
-        msg: str
+        err: str
 
     def __init__(self, e: ErrorData):
-        self.data = e
+        self.err = e
 
 class Db:
     "Router for Db methods"
@@ -76,19 +76,10 @@ class Db:
 
 
 
-def Atomic(*f: Callable[Input, Output]) -> Callable[Input, Tuple[Output, None] | Tuple[RouterError, None]]:
+def Atomic(*f: Callable[Input, Output]) -> Callable[Input, Tuple[Output, None] | Tuple[None, RouterError]]:
     # Make "transaction here?" No session?
 
-    class RouterErr(NamedTuple):
-        err: RouterError
-        data: Literal[None] = None
-
-    class RouterOk(NamedTuple):
-        data: Output
-        err: Literal[None] = None
-
-
-    def wrapper(*args: Input.args, **kwargs: Input.kwargs) ->  RouterErr | RouterOk:
+    def wrapper(*args: Input.args, **kwargs: Input.kwargs) ->  Tuple[Output, None] | Tuple[None, RouterError]:
         print("Starting session")
         session = SessionMaker()
         try:
@@ -98,12 +89,12 @@ def Atomic(*f: Callable[Input, Output]) -> Callable[Input, Tuple[Output, None] |
             session.commit()
             session.close()
             print("Session closed")
-            return RouterOk(output)
+            return (output, None)
         
         except RouterError as e:
             session.rollback()
             session.close()
-            return RouterErr(e)
+            return (None, e)
 
         except Exception as e:
             session.rollback()

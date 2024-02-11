@@ -25,9 +25,11 @@ def index():
 def view_one(org_id: int):
 
     ctx = Ctx()
-    organization = ctx.db.organizations.get_by_id({"id":org_id})
-    if organization.err is not None: return "Uh oh"
-    organization.data.name
+    org, err = ctx.db.organizations.get_by_id({"id":org_id})
+    
+    if output[1] is not None: return "Uh oh"
+    else:
+        org = output[0]
 
     return render_template(
         "admin/organizations/index.html",
