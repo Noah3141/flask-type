@@ -3,7 +3,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm.session import sessionmaker
 
 
-engine = create_engine("mysql://root:hb3f12d5aefc3G2ga412bfBddG-bA6Fg@viaduct.proxy.rlwy.net:54672/railway")
+engine = create_engine("mysql://root:mysql-password-1@127.0.0.1:3306/flasktypes")
+# engine = create_engine("mysql://root:hb3f12d5aefc3G2ga412bfBddG-bA6Fg@viaduct.proxy.rlwy.net:54672/railway")
 
 
 AutoBase = automap_base()

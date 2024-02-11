@@ -2,7 +2,7 @@ from typing import NamedTuple
 from flask.sessions import SessionMixin as FlaskSession
 from sqlalchemy.orm import Session as DbSession
 from flask import session
-from models.db import Db
+from models.db.root import Db
 from flask import request, Request
 
 
